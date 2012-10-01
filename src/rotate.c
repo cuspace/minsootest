@@ -46,16 +46,8 @@ void rotate_rightk(int arr[], int s, int t, int k)
     
     last_k_backup(arr, last, s, t, k);
     
-    //printf("last[0]=%d, last[1]=%d\n", last[0], last[1]);
-    
     for (j = 0, i = s; i < t+1; i++) {
         ri = get_rotated_right_idx(i, s, t, k);
-        if (i >= backupStartIdx) {
-            arr[ri] = last[j++];
-        }
-        else {
-            arr[ri] = arr[i];
-        }
-        //printf("%d: %d\n", ri, arr[ri]);
+        arr[ri] = (i >= backupStartIdx) ? last[j++] : arr[i];
     }
 }
