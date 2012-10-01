@@ -1,0 +1,8 @@
+* 마지막 k개 (여기서 k = 2)를 백업한다.
+ * last[0] = arr[3]
+ * last[1] = arr[4]
+* 백업할 arr index : [t+1-k ~ < t+1] 만큼
+* last index는 0부터 <k까지
+* s ~ t 까지 순서대로 옮겨 저장
+ * 매번 i == t+1-k 인지 check
+ * 위 조건이 일치하면 0부터 시작해서 last_index++로 last[]를 읽어서 arr[ri]에 저장
