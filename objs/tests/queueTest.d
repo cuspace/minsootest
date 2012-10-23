@@ -10,7 +10,7 @@ objs/tests/queueTest.o: tests/queueTest.cpp \
   ../CppUTest/include/CppUTest/TestFailure.h \
   ../CppUTest/include/CppUTest/TestPlugin.h \
   ../CppUTest/include/CppUTest/MemoryLeakWarningPlugin.h \
-  ../CppUTest/include/CppUTest/TestHarness_c.h
+  ../CppUTest/include/CppUTest/TestHarness_c.h include/queue.h
 
 ../CppUTest/include/CppUTest/MemoryLeakDetectorNewMacros.h:
 
@@ -35,3 +35,5 @@ objs/tests/queueTest.o: tests/queueTest.cpp \
 ../CppUTest/include/CppUTest/MemoryLeakWarningPlugin.h:
 
 ../CppUTest/include/CppUTest/TestHarness_c.h:
+
+include/queue.h:
