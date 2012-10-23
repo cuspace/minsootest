@@ -29,7 +29,7 @@ TEST(queue, ringqBufferQueueTests)
 {
     struct queue q;
     //int ret = 0;
-    //int outData = 0;
+    int outData = 0;
     
     //queue length initialization
     init_queue(&q, 8);
@@ -41,6 +41,18 @@ TEST(queue, ringqBufferQueueTests)
     enqueue(&q, 206);
     enqueue(&q, 207);
     enqueue(&q, 208);
+    dequeue(&q, &outData);
+    LONGS_EQUAL(201, outData);
+    dequeue(&q, &outData);
+    LONGS_EQUAL(202, outData);
+    dequeue(&q, &outData);
+    LONGS_EQUAL(203, outData);
+    dequeue(&q, &outData);
+    LONGS_EQUAL(204, outData);
+    
+    enqueue(&q, 209);
+    LONGS_EQUAL(1, get_q_tail(&q));
+    LONGS_EQUAL(209, get_q_data(&q, 0));
 }
 
 TEST(queue, queueFunctions)
