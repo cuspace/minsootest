@@ -31,9 +31,11 @@ TEST(queue, queueFunctions)
     int ret = 0;
     int outData = 0;
     
+    //queue length initialization
     init_queue(&q, 8);
     LONGS_EQUAL(8, get_q_length(&q));
     
+    //enqueue 8 items
     enqueue(&q, 101);
     LONGS_EQUAL(1, get_q_tail(&q));
     LONGS_EQUAL(101, get_q_data(&q, 0));
@@ -64,9 +66,11 @@ TEST(queue, queueFunctions)
     
     LONGS_EQUAL(1, is_q_full(&q));
     
+    //queue full error return test
     ret = enqueue(&q, 109);
     LONGS_EQUAL(QUEUE_FULL, ret);
-    
+ 
+    //dequeue 8 items
     dequeue(&q, &outData);
     LONGS_EQUAL(1, get_q_head(&q));
     LONGS_EQUAL(101, outData);
@@ -97,6 +101,7 @@ TEST(queue, queueFunctions)
     
     LONGS_EQUAL(1, is_q_empty(&q));
     
+    //queue empty error return test
     ret = dequeue(&q, &outData);
     LONGS_EQUAL(QUEUE_EMPTY, ret);
 }
