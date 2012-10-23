@@ -33,6 +33,14 @@ TEST(queue, ringqBufferQueueTests)
     
     //queue length initialization
     init_queue(&q, 8);
+    enqueue(&q, 201);
+    enqueue(&q, 202);
+    enqueue(&q, 203);
+    enqueue(&q, 204);
+    enqueue(&q, 205);
+    enqueue(&q, 206);
+    enqueue(&q, 207);
+    enqueue(&q, 208);
 }
 
 TEST(queue, queueFunctions)
