@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include "../include/queue.h"
 
-void init_queue(struct queue *q, int qLen)
+void init_queue(struct queue *q, int filled_q_size)
 {
     q->head = 0;
     q->tail = 0;
-    q->qLen = qLen;
+    q->filled_q_size = filled_q_size;
 }
 
 int get_q_length(struct queue *q)
 {
-    return q->qLen;
+    return q->filled_q_size;
 }
 
 int get_q_tail(struct queue *q)
@@ -30,7 +30,7 @@ int get_q_data(struct queue *q, int idx)
 
 int is_q_full(struct queue *q)
 {
-    return q->tail == q->qLen ? 1 : 0;
+    return q->tail == q->filled_q_size ? 1 : 0;
 }
 
 int is_q_empty(struct queue *q)
@@ -40,12 +40,12 @@ int is_q_empty(struct queue *q)
 
 void update_tail(struct queue *q)
 {
-    q->tail = q->tail == q->qLen ? 0 : q->tail + 1;
+    q->tail = q->tail == q->filled_q_size ? 0 : q->tail + 1;
 }
 
 void update_head(struct queue *q)
 {
-    q->head = q->head == q->qLen ? 0 : q->head + 1;
+    q->head = q->head == q->filled_q_size ? 0 : q->head + 1;
 }
 
 int enqueue(struct queue *q, int inData)

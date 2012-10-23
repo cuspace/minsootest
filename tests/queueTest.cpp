@@ -2,7 +2,7 @@
 #include "queue.h"
 
 extern "C" {
-    extern void init_queue(struct queue *q, int qLen);
+    extern void init_queue(struct queue *q, int filled_q_size);
     extern int get_q_length(struct queue *q);
     extern int get_q_tail(struct queue *q);
     extern int get_q_head(struct queue *q);
@@ -25,6 +25,16 @@ TEST_GROUP(queue)
 
 #define QUEUE_FULL -1
 #define QUEUE_EMPTY -1
+TEST(queue, ringqBufferQueueTests)
+{
+    struct queue q;
+    //int ret = 0;
+    //int outData = 0;
+    
+    //queue length initialization
+    init_queue(&q, 8);
+}
+
 TEST(queue, queueFunctions)
 {
     struct queue q;
@@ -104,4 +114,5 @@ TEST(queue, queueFunctions)
     //queue empty error return test
     ret = dequeue(&q, &outData);
     LONGS_EQUAL(QUEUE_EMPTY, ret);
+    
 }
