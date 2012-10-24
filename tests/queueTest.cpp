@@ -2,8 +2,7 @@
 #include "queue.h"
 
 extern "C" {
-    extern void init_queue(struct queue *q, int filled_q_size);
-    extern int get_q_length(struct queue *q);
+    extern void init_queue(struct queue *q);
     extern int get_q_tail(struct queue *q);
     extern int get_q_head(struct queue *q);
     extern int get_q_data(struct queue *q, int idx);
@@ -32,7 +31,7 @@ TEST(queue, ringqBufferQueueTests)
     int outData = 0;
     
     //queue length initialization
-    init_queue(&q, 8);
+    init_queue(&q);
     enqueue(&q, 201);
     enqueue(&q, 202);
     enqueue(&q, 203);
@@ -49,10 +48,22 @@ TEST(queue, ringqBufferQueueTests)
     LONGS_EQUAL(203, outData);
     dequeue(&q, &outData);
     LONGS_EQUAL(204, outData);
+    LONGS_EQUAL(4, get_q_head(&q));
     
     enqueue(&q, 209);
     LONGS_EQUAL(1, get_q_tail(&q));
     LONGS_EQUAL(209, get_q_data(&q, 0));
+    enqueue(&q, 210);
+    LONGS_EQUAL(2, get_q_tail(&q));
+    LONGS_EQUAL(210, get_q_data(&q, 1));
+    enqueue(&q, 211);
+    LONGS_EQUAL(3, get_q_tail(&q));
+    LONGS_EQUAL(211, get_q_data(&q, 2));
+    enqueue(&q, 212);
+    LONGS_EQUAL(4, get_q_tail(&q));
+    LONGS_EQUAL(212, get_q_data(&q, 3));
+    
+    LONGS_EQUAL(1, is_q_full(&q));
 }
 
 TEST(queue, queueFunctions)
@@ -62,8 +73,7 @@ TEST(queue, queueFunctions)
     int outData = 0;
     
     //queue length initialization
-    init_queue(&q, 8);
-    LONGS_EQUAL(8, get_q_length(&q));
+    init_queue(&q);
     
     //enqueue 8 items
     enqueue(&q, 101);
@@ -91,7 +101,7 @@ TEST(queue, queueFunctions)
     LONGS_EQUAL(0, is_q_full(&q));
     
     enqueue(&q, 108);
-    LONGS_EQUAL(8, get_q_tail(&q));
+    LONGS_EQUAL(0, get_q_tail(&q));
     LONGS_EQUAL(108, get_q_data(&q, 7));
     
     LONGS_EQUAL(1, is_q_full(&q));
@@ -126,7 +136,7 @@ TEST(queue, queueFunctions)
     LONGS_EQUAL(0, is_q_empty(&q));
     
     dequeue(&q, &outData);
-    LONGS_EQUAL(8, get_q_head(&q));
+    LONGS_EQUAL(0, get_q_head(&q));
     LONGS_EQUAL(108, outData);
     
     LONGS_EQUAL(1, is_q_empty(&q));

@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include "../include/queue.h"
 
-void init_queue(struct queue *q, int filled_q_size)
+void init_queue(struct queue *q)
 {
     q->head = 0;
     q->tail = 0;
-    q->filled_q_size = filled_q_size;
+    q->filled_q_size = 0;
 }
 
 int get_q_length(struct queue *q)
@@ -30,22 +30,32 @@ int get_q_data(struct queue *q, int idx)
 
 int is_q_full(struct queue *q)
 {
-    return q->tail == q->filled_q_size ? 1 : 0;
+    return (q->filled_q_size == MAX_Q_SIZE);
 }
 
 int is_q_empty(struct queue *q)
 {
-    return q->head == q->tail ? 1 : 0;
+    return (q->filled_q_size == 0);
 }
 
-void update_tail(struct queue *q)
+static void update_tail(struct queue *q)
 {
-    q->tail = q->tail == q->filled_q_size ? 0 : q->tail + 1;
+    q->tail = ((q->tail+1) % MAX_Q_SIZE);
 }
 
-void update_head(struct queue *q)
+static void update_head(struct queue *q)
 {
-    q->head = q->head == q->filled_q_size ? 0 : q->head + 1;
+    q->head = ((q->head+1) % MAX_Q_SIZE);
+}
+
+static void increase_filled_q_size(struct queue *q)
+{
+    q->filled_q_size++;
+}
+
+static void decrease_filled_q_size(struct queue *q)
+{
+    q->filled_q_size--;
 }
 
 int enqueue(struct queue *q, int inData)
@@ -57,6 +67,7 @@ int enqueue(struct queue *q, int inData)
     
     q->data[q->tail] = inData;
     update_tail(q);
+    increase_filled_q_size(q);
     
     return 0;
 }
@@ -70,6 +81,7 @@ int dequeue(struct queue *q, int *outData)
     
     *outData = q->data[q->head];
     update_head(q);
+    decrease_filled_q_size(q);
     
     return 0;
 }
@@ -79,7 +91,7 @@ int main(void)
     int inNum, outNum;
     struct queue q;
     
-    init_queue(&q, 8);
+    init_queue(&q);
     
     do {
         printf("input number: ");
@@ -95,7 +107,7 @@ int main(void)
             if (dequeue(&q, &outNum) < 0)
             {
                 printf("queue empty!\n");
-                init_queue(&q, 8);
+                init_queue(&q);
             }
             else
             {
